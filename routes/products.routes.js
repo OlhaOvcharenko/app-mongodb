@@ -43,7 +43,7 @@ router.post('/products', (req, res) => {
   const { name, client } = req.body;
 
   req.db.collection('products')
-    .insertMany([{ name: name, client: client } ])
+    .insertMany([{ name, client } ])
     .then(() => {
       res.json({ message: 'OK' });
     })
@@ -56,7 +56,7 @@ router.put('/products/:id', (req, res) => {
   const { name, client } = req.body;
 
   req.db.collection('products')
-    .updateMany({ _id: ObjectId(req.params.id) }, { $set: { name: name }, $set: { client: client },})
+    .updateMany({ _id: ObjectId(req.params.id) }, { $set:{name }, $set:{ client },})
     .then(() => {
       res.json({ message: 'OK' });
     })

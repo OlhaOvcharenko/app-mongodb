@@ -43,7 +43,7 @@ router.post('/employees', (req, res) => {
   const { name, lastname, department, salary } = req.body;
 
   req.db.collection('employees')
-    .insertMany([{ name: name, lastName: lastname, department: department , salary: salary}])
+    .insertMany([{ name, lastname, department,  salary}])
     .then(() => {
       res.json({ message: 'OK' });
     })
@@ -56,8 +56,8 @@ router.put('/employees/:id', (req, res) => {
   const { name, lastname, department, salary} = req.body;
 
   req.db.collection('employees')
-    .updateOne({ _id: ObjectId(req.params.id) }, { $set: { name: name }, $set: { lastname: lastname },
-    $set: { department: department }, $set: { salary: salary},})
+    .updateOne({ _id: ObjectId(req.params.id) }, { $set: { name }, $set: { lastname },
+    $set: {department }, $set: { salary},})
     .then(() => {
       res.json({ message: 'OK' });
     })

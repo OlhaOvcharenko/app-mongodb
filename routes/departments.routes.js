@@ -42,7 +42,7 @@ router.post('/departments', (req, res) => {
   const { name } = req.body;
 
   req.db.collection('departments')
-    .insertOne({ name: name })
+    .insertOne({name})
     .then(() => {
       res.json({ message: 'OK' });
     })
@@ -55,7 +55,7 @@ router.put('/departments/:id', (req, res) => {
   const { name } = req.body;
 
   req.db.collection('departments')
-    .updateOne({ _id: ObjectId(req.params.id) }, { $set: { name: name }})
+    .updateOne({ _id: ObjectId(req.params.id) }, { $set: { name }})
     .then(() => {
       res.json({ message: 'OK' });
     })
