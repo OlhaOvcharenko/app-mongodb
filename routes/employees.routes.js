@@ -17,7 +17,7 @@ router.get('/employees/random', async (req, res) => {
     const rand = Math.floor(Math.random() * count);
     const employee = await Employee.findOne().skip(rand);
     if(!employee) res.status(404).json({ message: 'Not found' });
-    else res.json(dep);
+    else res.json(employee);
   }
   catch(err) {
     res.status(500).json({ message: err });
@@ -28,7 +28,7 @@ router.get('/employees/:id', async (req, res) => {
   try {
     const employee = await Employee.findById(req.params.id);
     if(!employee) res.status(404).json({ message: 'Not found' });
-    else res.json(dep);
+    else res.json(employee);
   }
   catch(err) {
     res.status(500).json({ message: err });
@@ -37,8 +37,8 @@ router.get('/employees/:id', async (req, res) => {
 
 router.post('/employees', async (req, res) => {
   try {
-    const { name, lastname, department, salary } = req.body;
-    const newEmployee = new Employee({ name, lastname, department, salary });
+    const { firstName, lastName, department, salary } = req.body;
+    const newEmployee = new Employee({ firstName, lastName, department, salary });
     await newEmployee.save();
     res.json({ message: 'OK' });
   }
@@ -49,12 +49,12 @@ router.post('/employees', async (req, res) => {
 });
 
 router.put('/employees/:id', async (req, res) => {
-  const { name, lastname, department, salary} = req.body;
+  const { firstName, lastName, department, salary} = req.body;
   try {
     const employee = await Employee.findById(req.params.id);
     if(employee) {
-      employee.name = name;
-      employee.lastName = lastname;
+      employee.firstName = firstName;
+      employee.lastName = lastName;
       employee.department = department;
       employee.salary = salary;
       await employee.save();
