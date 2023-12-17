@@ -14,8 +14,11 @@ exports.getRandom = async (req, res) => {
     const count = await Product.countDocuments();
     const rand = Math.floor(Math.random() * count);
     const product = await Product.findOne().skip(rand);
-    if(!product) res.status(404).json({ message: 'Not found' });
-    else res.json(dep);
+    if(!product) {
+      res.status(404).json({ message: 'Not found' });
+    } else {
+      res.json(dep);
+    }
   }
   catch(err) {
     res.status(500).json({ message: err });
@@ -26,8 +29,11 @@ exports.getById = async (req, res) => {
   
   try {
     const product = await Product.findById(req.params.id);
-    if(!product) res.status(404).json({ message: 'Not found' });
-    else res.json(product);
+    if(!product) {
+      res.status(404).json({ message: 'Not found' });
+    } else {
+      res.json(product);
+    }
   }
   catch(err)  {
     res.status(500).json({ message: err });
@@ -50,14 +56,15 @@ exports.updateProduct = async (req, res) => {
   const { name, client } = req.body;
 
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findByIdAndUpdate(req.params.id,
+      { name, client},
+      { new: true, runValidators: true }
+    );
     if(product) {
-      product.name = name;
-      product.client = client;
-      await product.save();
       res.json({ message: 'OK' });
+    } else {
+      res.status(404).json({ message: 'Not found...' });
     }
-    else res.status(404).json({ message: 'Not found...' });
   }
   catch(err) {
     res.status(500).json({ message: err });
@@ -67,12 +74,12 @@ exports.updateProduct = async (req, res) => {
 
 exports.deleteProduct = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findByIdAndDelete(req.params.id);
     if(product) {
-      await Product.deleteOne({ _id: req.params.id });
       res.json({ message: 'OK' });
+    } else {
+      res.status(404).json({ message: 'Not found...' });
     }
-    else res.status(404).json({ message: 'Not found...' });
   }
   catch(err) {
     res.status(500).json({ message: err });
