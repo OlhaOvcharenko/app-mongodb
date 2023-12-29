@@ -2,7 +2,6 @@ const Employee = require('../employee.module');
 const expect = require('chai').expect;
 const mongoose = require('mongoose');
 
-
 describe('Employee', () => {
 
   it('should throw an error if any of arg is missining or there are no arguments at all', async () => {
@@ -53,9 +52,7 @@ describe('Employee', () => {
     }
   });
 
-
   after(() => {
     mongoose.models = {};
   });
-
 });

@@ -50,12 +50,10 @@ describe('Department', () => {
         expect(err).to.not.exist;
         });
       }
-
     });
-
-
+   
     after(() => {
-    mongoose.models = {};
+      mongoose.models = {};
     });
 
 });
