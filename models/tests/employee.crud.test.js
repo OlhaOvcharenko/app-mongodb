@@ -61,8 +61,8 @@ describe('Employee', () => {
     });
 
     it('should properly update one document with "updateOne" method', async () => {
-      await Employee.updateOne({firstName: 'John', lastName:'Doe', department: 'Marketing', salary: 5000}, { $set: { department: 'Managment' }});
-      const updatedEmployee = await Employee.findOne({firstName: 'John', lastName:'Doe', department: 'Managment', salary: 5000});
+      await Employee.updateOne({firstName: 'John', lastName:'Doe', department: 'Marketing', salary: 5000}, { $set: { department: 'Managment', salary: 7000 }});
+      const updatedEmployee = await Employee.findOne({firstName: 'John', lastName:'Doe', department: 'Managment', salary: 7000});
       expect(updatedEmployee).to.not.be.null;
     });
     
